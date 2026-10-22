@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LUMA — Your moment to glow</title>
+<meta name="theme-color" content="#314CE1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css?v=20261022q">
+<link rel="stylesheet" href="css/components.css?v=20261022q">
+<link rel="stylesheet" href="css/screens.css?v=20261022q">
+</head>
+<body>
+  <div class="stage">
+    <div class="phone" id="phone">
+      <div class="screen" id="screen"></div>
+    </div>
+  </div>
+
+  <!-- ?v= evita que el navegador reutilice JS viejo en caché (rompía
+       la detección porque el listener antiguo exigía Track 3). -->
+  <script src="js/data.js?v=20261022q"></script>
+  <script src="js/components.js?v=20261022q"></script>
+  <script src="js/app.js?v=20261022q"></script>
+  <script src="js/luma-device.js?v=20261022q"></script>
+  <script src="js/screens/auth.js?v=20261022q"></script>
+  <script src="js/screens/home.js?v=20261022q"></script>
+  <script src="js/screens/track.js?v=20261022q"></script>
+  <script src="js/screens/routine.js?v=20261022q"></script>
+  <script src="js/screens/device.js?v=20261022q"></script>
+  <script src="js/screens/account.js?v=20261022q"></script>
+</body>
+</html>
