@@ -1,0 +1,116 @@
+/* ---- SF Pro Display: ONLY for the iOS status-bar clock (as in the Figma frames) ---- */
+@font-face{
+  font-family:'SF Pro Display';font-style:normal;font-weight:400;font-display:swap;
+  src:url('../assets/fonts/SFProDisplay-Regular.otf') format('opentype');
+}
+@font-face{
+  font-family:'SF Pro Display';font-style:normal;font-weight:500;font-display:swap;
+  src:url('../assets/fonts/SFProDisplay-Medium.otf') format('opentype');
+}
+@font-face{
+  font-family:'SF Pro Display';font-style:normal;font-weight:700;font-display:swap;
+  src:url('../assets/fonts/SFProDisplay-Bold.otf') format('opentype');
+}
+
+:root{
+  /* LUMA palette — extracted from the Figma file "WireFrames / Diseño LUMA" */
+  --cobalt:#314CE1;
+  --cobalt-deep:#2A41C9;
+  --cobalt-soft:#5672E9;
+  --blue-link:#2F5BE0;
+  --peri:#7284EA;
+  --peri-light:#A8B5FC;
+  --peri-chip:#B7BEF9;
+  --peri-pale:#D1DBFD;
+  --bg:#F8F8F8;
+  --grey-card:#F1F1F1;
+  --grey-line:#E4E4E4;
+  --grey-text:#8A8A8E;
+  --grey-strong:#3C3C43;
+  --white:#FFFFFF;
+  /* clinical / dermatology warm theme */
+  --peach:#F3E0CB;
+  --peach-deep:#EDCBAA;
+  --amber:#E79A4B;
+
+  --radius-card:22px;
+  --radius-pill:999px;
+  --shadow-card:0 8px 24px rgba(60,70,120,.12);
+  --shadow-soft:0 4px 14px rgba(60,70,120,.10);
+  --shadow-pill:0 6px 14px rgba(60,70,120,.18);
+
+  /* Poppins is the single UI typeface across the whole LUMA app (per Figma).
+     SF Pro Display is reserved exclusively for the status-bar clock.        */
+  --font-ui:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-round:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-soft:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-system:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-sf:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:#DCDEE8;
+  background-image:radial-gradient(circle at 20% 10%,#EDEFF7 0%,#DCDEE8 60%);
+  font-family:var(--font-ui);
+  color:var(--grey-strong);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.stage{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+
+/* ---------- phone shell (420 x 912, the Figma frame size) ---------- */
+.phone{
+  --phone-scale:1;
+  position:relative;
+  width:420px;height:912px;
+  transform:scale(var(--phone-scale));
+  transform-origin:center center;
+  background:var(--bg);
+  border-radius:46px;
+  box-shadow:0 30px 70px rgba(35,45,90,.35),0 0 0 10px #10131c,0 0 0 12px #2a2f3d;
+  overflow:hidden;
+  flex:none;
+}
+.screen{position:absolute;inset:0;overflow:hidden}
+
+/* every screen fills the phone */
+.scr{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  overflow:hidden;
+}
+.scr--violet{background:linear-gradient(180deg,rgb(100,120,232) 0%,rgb(136,151,236) 23%,rgb(141,156,240) 51%,rgb(159,172,248) 71%,rgb(175,187,252) 84%,rgb(197,206,254) 91%,rgb(234,237,252) 100%)}
+.scr--peach{background:linear-gradient(180deg,#F7DFC2 0%,#F3E0CB 30%,#F6EDE4 60%,#F6F8FC 100%)}
+.scr__body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.scr__body::-webkit-scrollbar{width:0;height:0}
+
+/* ---------- responsive: on real phones the app fills the viewport ---------- */
+@media (max-width:480px){
+  body{background:#10131c}
+  .stage{align-items:stretch}
+  .phone{
+    width:100%;height:100%;max-width:480px;
+    transform:none;
+    border-radius:0;box-shadow:none;margin:0 auto;
+  }
+}
+
+/* ---------- text helpers ---------- */
+.h-display{font-family:var(--font-round);font-weight:300;letter-spacing:-1px;line-height:1.02}
+.h-round{font-family:var(--font-round);font-weight:800;letter-spacing:-.5px}
+.t-soft{font-family:var(--font-soft);font-weight:400}
+.muted{color:var(--grey-text)}
+
+/* ---------- generic interactive ---------- */
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input{font:inherit}
+a{color:var(--blue-link);text-decoration:none}
+[hidden]{display:none!important}
+
+.fade-in{animation:fadeIn .35s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-in{animation:slideIn .32s cubic-bezier(.22,.9,.3,1) both}
+@keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}

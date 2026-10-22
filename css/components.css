@@ -1,0 +1,185 @@
+/* ================= status bar ================= */
+.statusbar{
+  height:44px;flex:none;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 23px;
+  font-family:var(--font-sf);font-size:17px;font-weight:700;
+  position:relative;z-index:5;
+}
+.statusbar__time{display:flex;align-items:center;letter-spacing:.2px;font-family:var(--font-sf);font-weight:700}
+.statusbar__right{display:flex;align-items:center;gap:6px}
+
+/* ================= mascot =================
+   The soft luminous ball is CSS (matches the Figma glow), but the FACE is the
+   ORIGINAL PNG exported from Figma — never redrawn.                        */
+.mascot{position:relative;flex:none}
+/* Ball glow traced pixel-by-pixel from assets/reference/config.png (home):
+   solid radial traced on the Figma renders (02/03/04): centre #324DE1
+   -> rim #BCC4F1, hard edge. Every LUMA ball uses this same disc.
+   ::after — the orange/racha variant defines its own. */
+.mascot__ball{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,
+    #324DE1 0%, #3C56E3 8%, #475FE4 16%, #546AE6 25%, #5F74E6 33%, #6C7FE8 41%,
+    #7889EA 50%, #8293EB 58%, #8E9DEC 67%, #9AA7ED 75%, #A6B1EF 84%, #B1BBF0 92%, #BCC4F1 100%);
+
+}
+.mascot__face{
+  position:absolute;left:50%;top:51%;transform:translate(-50%,-50%);z-index:2;
+  width:37.3%;height:auto;pointer-events:none;
+}
+/* the Home/Config ball sits 5px left of the frame centre in the Figma frame */
+.home__blob .mascot{transform:translateX(-5px)}
+/* original Figma face PNG, standalone (splash, all-set, star bubble…) */
+.lumaface{display:block;object-fit:contain}
+.mascot--soft .mascot__ball{opacity:.9}
+/* solid ball rendered from the ORIGINAL exported ball PNG (loading, racha…) */
+.mascot--png{background-size:contain;background-repeat:no-repeat;background-position:center}
+
+/* ================= bottom nav =================
+   Figma exports the five nav states as ONE sheet (`Imagenes Figma/
+   navegación.png`, 427x865 @1x): white bar (x22..399, y791..874) with the
+   valley, the active disc, the icons and the shadow — pixel-exact per
+   state. We clip the row of the active tab (window y728..898) and overlay
+   invisible tap targets on the icon / disc centres.                   */
+.nav{position:absolute;left:0;top:0;width:100%;height:100%;z-index:20;pointer-events:none}
+.nav__clip{position:absolute;left:0;top:728px;width:100%;height:170px;overflow:hidden;pointer-events:none}
+.nav__sheet{position:absolute;left:2px;width:427px;height:865px;max-width:none;display:block}
+.nav__item{
+  position:absolute;width:52px;height:52px;margin:-26px 0 0 -26px;
+  border:0;padding:0;background:none;border-radius:50%;
+  pointer-events:auto;transition:transform .18s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.nav__item:active{transform:scale(.9)}
+/* tab labels (TRACK routes only). Poppins 500 @11px reproduces the measured
+   Figma ink widths to <0.5px (Doctor 37.5 vs 37.53, Luma 30.5 vs 30.45) and
+   cap-height 8px. Positioned by cap-top (baseline ~y864.5); `translate(-50%,-50%)`
+   is NOT used because the ink box is centred on the text origin, not the box. */
+.nav__label{
+  position:absolute;z-index:1;
+  font:500 11px/1 Poppins,sans-serif;
+  color:rgb(30,126,201);
+  white-space:nowrap;pointer-events:none;
+  transform:translate(-50%,-50%);
+}
+
+/* ================= top bar (HOME 67:2192) =================
+   search pill [21,53,297x45] fill #D9D9D9@20% + shadow(0,4,4,.25), glass
+   #314CE1 ink [274,67,23x18]; gear circle [354,53,45x45] = crop of the
+   ORIGINAL `Configuración.png` export (circle + cog baked, alpha kept). */
+.topbar{display:flex;align-items:center;gap:36px;padding:9px 21px 0;flex:none}
+.topbar__search{
+  flex:1;height:45px;border-radius:var(--radius-pill);
+  background:rgba(217,217,217,.20);
+  display:flex;align-items:center;justify-content:flex-end;
+  padding:0 22px;position:relative;
+  box-shadow:0 4px 4px rgba(0,0,0,.25);
+}
+.topbar__value{position:absolute;left:20px;font-size:17px;color:#4A4A4F;font-family:var(--font-ui)}
+.topbar__glass{display:flex;line-height:0}
+.topbar__gear{
+  width:45px;height:45px;border-radius:50%;flex:none;
+  padding:0;border:0;background:none;line-height:0;
+  box-shadow:0 4px 4px rgba(0,0,0,.25);
+}
+.topbar__gear img{width:100%;height:100%;display:block}
+
+/* ================= round buttons ================= */
+.roundbtn{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex:none;
+  background:rgba(255,255,255,.55);
+  box-shadow:0 4px 12px rgba(30,40,90,.18);
+  backdrop-filter:blur(6px);
+  transition:transform .15s ease;
+}
+.roundbtn:active{transform:scale(.92)}
+.roundbtn--blue{background:#314CE1;color:#fff}
+
+/* Botón «atrás» con el asset ORIGINAL `Imagenes Figma\botón regreso.png` (86x154 con los
+   dos estados apilados; recortados a assets/luma/back-{gray,blue}.png, 50x51).
+   Medido en registro_dias / registro_horas / add_device / product_level_m1: el círculo
+   ocupa x26..71, y54..100 → 46x47, centro (48.5,77); el relleno #D7D7D7 @ A=20 % sobre
+   #7486EB da exactamente #8896E7, el color del original (rgba(255,255,255,.32) daba
+   #A0A0F0, demasiado claro). El círculo y el chevron vienen en el PNG: nada de CSS chrome. */
+.roundbtn--png{
+  width:46.5px;height:47.5px;padding:0;border:0;border-radius:0;
+  background:none;box-shadow:none;backdrop-filter:none;
+}
+.roundbtn--png img{width:100%;height:100%;display:block;pointer-events:none}
+/* original gear glyph exported from Figma (recoloured white in a separate file) */
+/* Engranaje del cabecero: glifo aislado de `gear-header-white.png` (ese PNG era el botón
+   entero con el círculo horneado y el borde de selección discontinuo del export).
+   Tinta 20x22 como en registro_dias (centro 369.5,77.5); lienzo 26x28 con 3px de margen. */
+.roundbtn__ic{width:26px;height:28px;display:block;pointer-events:none}
+
+/* ================= pills / chips ================= */
+.pill{
+  min-height:40px;padding:8px 22px;border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.32);
+  border:1px solid rgba(255,255,255,.55);
+  color:#fff;font-family:var(--font-round);font-weight:600;font-size:16px;
+  box-shadow:0 4px 10px rgba(40,50,110,.18);
+  transition:transform .15s ease,background .15s ease;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.pill:active{transform:scale(.96)}
+.pill.is-selected{background:rgba(255,255,255,.62)}
+
+/* ================= segmented toggle ================= */
+.seg{
+  display:inline-flex;background:#fff;border-radius:var(--radius-pill);
+  padding:4px;box-shadow:0 6px 16px rgba(30,40,90,.16);
+}
+.seg__opt{
+  min-width:104px;height:38px;border-radius:var(--radius-pill);
+  font-family:var(--font-round);font-weight:700;font-size:16px;color:#2F49E0;
+  display:flex;align-items:center;justify-content:center;
+}
+.seg__opt.is-active{background:#314CE1;color:#fff}
+
+/* ================= generic pill button ================= */
+.btn{
+  height:52px;border-radius:var(--radius-pill);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-round);font-weight:700;font-size:18px;
+  width:100%;transition:transform .15s ease,filter .15s ease;
+}
+.btn:active{transform:scale(.98)}
+.btn--glass{background:rgba(255,255,255,.38);color:#fff;box-shadow:0 8px 20px rgba(30,40,110,.22)}
+.btn--blue{background:#314CE1;color:#fff;box-shadow:0 10px 22px rgba(49,76,225,.35)}
+.btn--grey{background:#E9E9EC;color:#6A6A70;box-shadow:0 6px 14px rgba(0,0,0,.10)}
+.btn--ghost{background:#EDEDED;color:#4A4A4F;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+
+/* ================= form fields ================= */
+.field{margin-bottom:22px}
+.field__label{
+  display:block;font-family:var(--font-round);font-weight:700;font-size:17px;
+  color:#2F49E0;margin:0 0 10px 4px;
+}
+.field__wrap{
+  position:relative;height:50px;border-radius:var(--radius-pill);
+  background:#ECECEC;box-shadow:inset 0 1px 2px rgba(0,0,0,.05);
+  display:flex;align-items:center;padding:0 18px;
+}
+.field__wrap input{
+  flex:1;border:0;background:none;outline:none;font-size:16px;color:#3C3C43;
+  font-family:var(--font-ui);
+}
+.field__wrap input::placeholder{color:#B7B7BC}
+.field__icon{display:flex;align-items:center;gap:8px;color:#8A8A8E}
+
+/* ================= cards ================= */
+.card{
+  background:#fff;border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+}
+
+/* ================= toast ================= */
+.toast{
+  position:absolute;left:50%;bottom:104px;transform:translateX(-50%);
+  background:rgba(30,35,60,.92);color:#fff;padding:12px 20px;border-radius:var(--radius-pill);
+  font-size:15px;font-family:var(--font-ui);z-index:60;white-space:nowrap;
+  animation:fadeIn .25s ease both;
+}
